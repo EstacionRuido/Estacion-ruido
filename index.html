@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Estación Ruido</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #EEEEEE;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1c2b4a;
+      padding: 15px 45px;
+    }
+    .navbar .logo img {
+      height: 25px;
+      vertical-align: middle;
+    }
+    .navbar .menu a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: white;
+      font-weight: 400;
+      cursor: pointer;
+    }
+    .navbar .menu a:hover {
+      text-decoration: underline;
+    }
+
+    /* Secciones */
+    .seccion {
+      display: none; /* Ocultas por defecto */
+      padding: 10px 0px;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+    .seccion.activa {
+      display: block; /* Solo la activa se muestra */
+    }
+
+    .seccion h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #1c2b4a;
+    }
+
+    #map {
+      width: 95%;
+      height: 450px;
+      margin: 5px auto;
+      border: 2px solid rgb(13, 12, 67);
+      border-radius: 10px;
+    }
+
+    /* Leyenda */
+    .legend {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;;
+      gap: 20px;
+    }
+    
+    .legend div {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    .legend span {
+      display: inline-block;
+      width: 20px;
+      height: 15px;
+      margin-right: 8px;
+    }
+    .low { background: #007990; }
+    .medium { background: #ffa42e; }
+    .high { background: #f63f3a; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="logo/LOGO-08.png" alt="logo">
+    </div>
+    <div class="menu">
+      <a onclick="mostrarSeccion('mapa')">Mapa</a>
+      <a onclick="mostrarSeccion('encuesta')">Encuesta</a>
+      <a onclick="mostrarSeccion('experiencia')">Mi experiencia</a>
+      <a onclick="mostrarSeccion('quienes')">Quiénes somos</a>
+      <a onclick="mostrarSeccion('recomendaciones')">Recomendaciones</a>
+    </div>
+  </div>
+
+  <!-- Intro (se puede dejar siempre visible si quieres) -->
+<section id="mapa" class="seccion activa">
+  <div class="intro">
+    <h1>A partir de una encuesta a 100 usuarios del metro, exploramos cómo el ruido afecta la experiencia de viajar bajo tierra.</h1>
+    <p>El mapa muestra el nivel de ruido percibido en las estaciones de la Línea 2 del Metro de Santiago, usando colores para indicar si es bajo, medio o alto.</p>
+    <p>En esta ocasión solo está disponible la información de la Línea 2.</p>
+  </div>
+
+  <div id="map"></div>
+  <div class="legend">
+    <div><span class="low"></span> Ruido Bajo</div>
+    <div><span class="medium"></span> Ruido Medio</div>
+    <div><span class="high"></span> Ruido Alto</div>
+  </div>
+  <p>En ciertas estaciones encontrarás audios con el sonido ambiente grabado en el lugar</p>
+</section>
+
+
+  <!-- Sección Encuesta -->
+  <section id="encuesta" class="seccion">
+    <h2>Lo que nos cuentan los pasajeros: hábitos, percepciones y sensaciones frente al ruido en Línea 2</h2>
+     <p>Personas encuestadas<p>
+    
+    <div class="encuesta-content">
+        <!-- Aquí va tu gráfico de torta -->
+        <div class="grafico">
+            <img src="gráficos/gráfico edad y genero.png" alt="Gráfico de distribución" />
+        </div>
+
+        <!-- Leyenda -->
+        <div class="leyenda">
+            <div class="item">
+                <span class="cuadro femenino-18-29"></span>
+                <p><strong>Femenino, 18 a 29 años</strong> → 74 personas</p>
+            </div>
+            <div class="item">
+                <span class="cuadro femenino-30-45"></span>
+                <p><strong>Femenino, 30 a 45 años</strong> → 9 personas</p>
+            </div>
+            <div class="item">
+                <span class="cuadro femenino-46-65"></span>
+                <p><strong>Femenino, 46 a 65 años</strong> → 1 persona</p>
+            </div>
+            <div class="item">
+                <span class="cuadro masculino-18-29"></span>
+                <p><strong>Masculino, 18 a 29 años</strong> → 12 personas</p>
+            </div>
+            <div class="item">
+                <span class="cuadro masculino-30-45"></span>
+                <p><strong>Masculino, 30 a 45 años</strong> → 1 persona</p>
+            </div>
+            <div class="item">
+                <span class="cuadro no-binarie-18-29"></span>
+                <p><strong>No binarie, 18 a 29 años</strong> → 1 persona</p>
+            </div>
+            <p> El público que más se sumó a la encuesta fue principalmente femenino y juvenil</p>
+            </div>
+        </div>
+    </div>
+    <section id="encuesta-content" style="padding: 15px; text-align: center;">
+      </section>
+      
+      <div id="encuesta-ruido"></div>
+  <h2>¿El ruido afecta el estado de ánimo?</h2>
+
+  <!-- Caritas -->
+   <div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0; font-size: 50px;">
+    <div class="carita" data-info="Nunca 4%">😊</div>
+    <div class="carita" data-info="No lo he notado 7%">😐</div>
+    <div class="carita" data-info="A veces 56%">😶</div>
+    <div class="carita" data-info="Sí, siempre 33%">😡</div>
+  </div>
+
+  <!-- Texto descriptivo -->
+  <p style="max-width: 600px; margin: 0 auto; font-size: 18px; color: #333;">
+    La gran mayoría (89%) afirmó que el ruido sí afecta su estado de ánimo, ya sea de forma constante (33%) o en ciertas ocasiones (56%).
+  </p>
+</div>
+
+<div id ="encuesta-viaje" style="padding: 40px; text-align: center;">
+
+<h2>¿Qué es lo más irritante durante un viaje?</h2>
+  <!-- Ondas de ruido con notas musicales -->
+<div class="ruido" style="margin: 50px auto; text-align: center; font-size: 30px;">
+  <div class="ruido-molesto">
+  <span>🎵</span>
+  <span>🎶</span>
+  <span>🎵</span>
+  <span>🎶</span>
+  <span>🎵</span>
+  <span>🎶</span>
+  <span>🎵</span>
+</div>
+<!-- CSS para animar las notas -->
+<style>
+.ruido-molesto {
+  position: relative;
+  height: 60px;
+  text-align: center;
+  font-size: 25px;
+  overflow: visible;
+  margin: 40px 0;
+}
+
+.ruido-molesto span {
+  position: absolute;
+  animation: molestar 1.5s infinite;
+  font-size: 25px;
+}
+
+.ruido-molesto span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.ruido-molesto span:nth-child(2) { left: 25%; animation-delay: 0.2s; }
+.ruido-molesto span:nth-child(3) { left: 40%; animation-delay: 0.4s; }
+.ruido-molesto span:nth-child(4) { left: 55%; animation-delay: 0.6s; }
+.ruido-molesto span:nth-child(5) { left: 70%; animation-delay: 0.8s; }
+.ruido-molesto span:nth-child(6) { left: 85%; animation-delay: 1s; }
+.ruido-molesto span:nth-child(7) { left: 50%; animation-delay: 1.2s; }
+
+@keyframes molestar {
+  0% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(20deg); }
+  50% { transform: translateY(10px) rotate(-20deg); }
+  75% { transform: translateY(-15px) rotate(10deg); }
+  100% { transform: translateY(5px) rotate(-10deg); }
+}
+</style>
+
+  <!-- Texto descriptivo -->
+  <p style="max-width: 600px; margin: 0 auto; font-size: 18px; color: #333;">
+    El 63% de los encuestados señaló que los parlantes con música alta son lo más irritante durante un viaje
+  </p>
+  <p style="max-width: 800px; margin: 0 auto; font-size: 18px; font-weight: bold; color: rgb(13, 12, 67);">
+    Es por esto que el 85% utiliza 🎧 para mitigar el ruido dentro del metro 
+  
+
+  <div id ="encuesta-musica" style="padding: 40px; text-align: center;">
+
+<!-- CSS específico para la sección encuesta -->
+<style>
+  :root{
+    --bg: #0f172a;
+    --panel: #111827;
+    --text: #e5e7eb;
+    --muted:#ffffff;
+    --accent: #ffffff;
+    --accent-2:#f59e0b;
+    --ring: rgba(255, 255, 255, 0.337);
+  }
+  .encuesta-wrap{
+    max-width: 1100px;
+    margin: clamp(16px, 4vw, 48px) auto;
+    padding: clamp(12px, 3vw, 24px);
+    display: grid;
+    gap: clamp(16px, 2.5vw, 28px);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px){
+    .encuesta-wrap{ grid-template-columns: 1fr 1fr; }
+  }
+  .panel{
+    display: flex;
+    flex-direction: column; /*apilar verticalmente*/
+    justify-content: center; /*centrar verticalmente*/
+    align-items: center; /*centrar horizontalmente*/
+    background: var(--panel);
+    border: 1px solid var(--ring);
+    border-radius: 18px;
+    padding: clamp(14px, 3vw, 24px);
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  }
+  .encuesta-wrap .title{ 
+    font-size: 0.95rem; 
+    color: var(--muted); 
+  }
+  .stat{ font-size: clamp(1rem, 2.2vw, 1.15rem); max-width: 38ch; color: #ffffff}
+  .stat strong{ color: var(--accent-2); }
+  .clock-row{
+     display: flex; 
+     align-items: center; 
+     gap: clamp(14px, 3vw, 20px);
+     flex-direction: column; /*apilar verticalmente*/
+     justify-content: center; /*centrar verticalmente*/
+     align-items: center; /*centrar horizontalmente*/
+     flex-wrap: wrap; 
+    }
+  .clock{ width: clamp(120px, 22vw, 180px); aspect-ratio: 1; }
+  .clock svg{ width: 100%; height: 100%; }
+  .clock-face{ fill:#0b1220; stroke: var(--ring); stroke-width: 1.5; }
+  .tick{ stroke: rgba(229,231,235,.28); stroke-width: 1.6; }
+  .hand{ stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; transform-origin: 50px 50px; }
+  @keyframes tick { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+  .hand.animate{ animation: tick 10s linear infinite; }
+  .conviz{ display: flex; align-items: center; justify-content: center; gap: clamp(12px, 3vw, 22px); margin: .25rem 0 .75rem; flex-wrap: wrap; }
+  .person{ width: clamp(64px, 12vw, 84px); }
+  .speaker{ width: clamp(88px, 16vw, 120px); }
+  .speaker path, .speaker circle{ fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; }
+  .wave{ opacity: .15; }
+  @keyframes volPulse {
+    0%{ opacity: 0; transform: scale(.75); }
+    40%{ opacity: .6; }
+    70%{ opacity: 1; }
+    100%{ opacity: 0; transform: scale(1.08); }
+  }
+  .wave.w1{ animation: volPulse 1400ms ease-out infinite; animation-delay: 0ms; }
+  .wave.w2{ animation: volPulse 1400ms ease-out infinite; animation-delay: 260ms; }
+  .wave.w3{ animation: volPulse 1400ms ease-out infinite; animation-delay: 520ms; }
+  .face-line{ stroke: #0b1220; stroke-width: 1.5; stroke-linecap: round; opacity: .45; }
+  @media (prefers-reduced-motion: reduce){
+    .hand.animate, .wave{ animation: none !important; }
+  }
+</style>
+
+<!-- Contenido de la sección encuesta -->
+<div class="encuesta-wrap">
+  <!-- Columna izquierda -->
+  <article class="panel">
+    <h2 class="title">Horario punta y ruido</h2> 
+    <div class="clock-row">
+      <div class="clock">
+        <svg viewBox="0 0 100 100">
+          <circle class="clock-face" cx="50" cy="50" r="47"/>
+          <g>
+            <line class="tick" x1="50" y1="7"  x2="50" y2="13"/>
+            <line class="tick" x1="50" y1="87" x2="50" y2="93"/>
+            <line class="tick" x1="7"  y1="50" x2="13" y2="50"/>
+            <line class="tick" x1="87" y1="50" x2="93" y2="50"/>
+          </g>
+          <g class="hand animate">
+            <line x1="50" y1="50" x2="50" y2="14"/>
+            <circle cx="50" cy="50" r="2.6" fill="currentColor" style="color:var(--accent)"/>
+          </g>
+        </svg>
+      </div>
+      <p class="stat"><strong>95% considera terribles</strong> el <em>el horario punta</em> por el ruido en el entorno.</p>
+    </div>
+  </article>
+
+  <!-- Columna derecha -->
+  <article class="panel">
+    <h2 class="title">Conversación en ambientes ruidosos</h2>
+    <div class="conviz">
+      <!-- Persona izquierda -->
+      <svg class="person" viewBox="0 0 64 64">
+        <circle cx="32" cy="16" r="10" fill="#94a3b8"/>
+        <rect x="22" y="28" width="20" height="26" rx="8" fill="#64748b"/>
+      </svg>
+     <div class="conviz">
+  <!-- Persona izquierda -->
+  <svg class="audio-lines left" viewBox="0 0 24 24" width="28" height="28">
+    <rect x="2" y="10" width="2" height="4" fill="#f59e0b">
+      <animate attributeName="height" values="4;12;4" dur="1.5s" repeatCount="indefinite" begin="0s"/>
+    </rect>
+    <rect x="6" y="6" width="2" height="12" fill="#f59e0b">
+      <animate attributeName="height" values="12;6;12" dur="1s" repeatCount="indefinite" begin="0.1s"/>
+    </rect>
+    <rect x="10" y="3" width="2" height="18" fill="#f59e0b">
+      <animate attributeName="height" values="18;8;18" dur="0.8s" repeatCount="indefinite" begin="0.2s"/>
+    </rect>
+  </svg>
+
+  <!-- Persona derecha -->
+  <svg class="audio-lines right" viewBox="0 0 24 24" width="28" height="28">
+    <rect x="2" y="10" width="2" height="4" fill="#3b82f6">
+      <animate attributeName="height" values="4;12;4" dur="1.5s" repeatCount="indefinite" begin="0.5s"/>
+    </rect>
+    <rect x="6" y="6" width="2" height="12" fill="#3b82f6">
+      <animate attributeName="height" values="12;6;12" dur="1s" repeatCount="indefinite" begin="0.6s"/>
+    </rect>
+    <rect x="10" y="3" width="2" height="18" fill="#3b82f6">
+      <animate attributeName="height" values="18;8;18" dur="0.8s" repeatCount="indefinite" begin="0.7s"/>
+    </rect>
+  </svg>
+</div>
+
+
+      <!-- Persona derecha con gesto -->
+      <svg class="person" viewBox="0 0 64 64">
+        <circle cx="32" cy="16" r="10" fill="#94a3b8"/>
+        <rect x="22" y="28" width="20" height="26" rx="8" fill="#64748b"/>
+      </svg>
+    </div>
+    <p class="stat"><strong>Mayor ruido = complicado conversar</strong>. <br>La gran mayoría (<strong>95%</strong>) afirma que es verdad.</p>
+  </article>
+</div>
+
+<div id="encuesta-vagones" style="padding: 10px; text-align: center;"></div>
+
+<div id="platform" class="platform" role="region" aria-label="Animación de tren pasando por un andén" style="margin-top:20px;">
+  <div class="track" aria-hidden="true"></div>
+
+  <div class="trains">
+    <!-- Tren izquierda → derecha -->
+    <div class="train train--ltr top" role="img" aria-label="Tren del metro">
+      <svg viewBox="0 0 160 50" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="8" width="120" height="30" rx="6" ry="6" fill="#b0b0b0"/>
+        <rect x="4" y="22" width="120" height="6" fill="#e00000"/>
+        <rect x="112" y="12" width="36" height="22" rx="4" ry="4" fill="#7a7a7a"/>
+        <rect x="12" y="14" width="22" height="12" rx="2" fill="#f5f5f5"/>
+        <rect x="38" y="14" width="22" height="12" rx="2" fill="#f5f5f5"/>
+        <rect x="64" y="14" width="22" height="12" rx="2" fill="#f5f5f5"/>
+        <circle cx="30" cy="44" r="6" fill="#222"/>
+        <circle cx="86" cy="44" r="6" fill="#222"/>
+        <circle cx="134" cy="44" r="6" fill="#222"/>
+      </svg>
+      <div class="pass-text">El 49% percibe mucho ruido en el andén.</div>
+    </div>
+
+    <!-- Tren derecha → izquierda -->
+    <div class="train train--rtl bottom" role="img" aria-label="Tren del metro">
+      <svg viewBox="0 0 160 50" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="8" width="120" height="30" rx="6" ry="6" fill="#b0b0b0"/>
+        <rect x="4" y="22" width="120" height="6" fill="#e00000"/>
+        <rect x="112" y="12" width="36" height="22" rx="4" ry="4" fill="#7a7a7a"/>
+        <rect x="12" y="14" width="22" height="12" rx="2" fill="#f5f5f5"/>
+        <rect x="38" y="14" width="22" height="12" rx="2" fill="#f5f5f5"/>
+        <rect x="64" y="14" width="22" height="12" rx="2" fill="#f5f5f5"/>
+        <circle cx="30" cy="44" r="6" fill="#222"/>
+        <circle cx="86" cy="44" r="6" fill="#222"/>
+        <circle cx="134" cy="44" r="6" fill="#222"/>
+      </svg>
+      <div class="pass-text">Un 55% considera que el metro es ruidoso</div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+:root{
+  --duration-s: 7s;
+  --train-height: 50px;
+}
+
+.platform{
+  position:relative;
+  width:100%;
+  height: calc(var(--train-height) * 4);
+  border-radius:5px;
+  overflow:hidden;
+  background: transparent;
+}
+
+.track{
+  position:absolute;
+  left:0; right:0; top:50%;
+  transform:translateY(-50%);
+  height:20%;
+  background:#ccc;
+}
+
+.trains{position:absolute;top:0;bottom:0;left:0;right:0;}
+
+.train{
+  position:absolute;
+  width: 160px;
+  height: var(--train-height);
+}
+
+.train.top { top: 40%; }
+.train.bottom { top: 60%; }
+
+.train svg{ width:100%; height:100%; }
+
+.pass-text{
+  position:absolute;
+  left:50%;
+  bottom:100%;
+  transform:translateX(-50%);
+  background:#222;
+  color:#fff;
+  padding:8px 16px;
+  border-radius:12px;
+  font-size: 0.55rem;
+  max-width: 95%;
+  white-space: normal;
+  line-height:1.4;
+  opacity:0;
+  text-align:center;
+}
+
+/* Animación LTR (izquierda → derecha) */
+.train--ltr{
+  left:-160px; /* empieza fuera del recuadro */
+  animation: move-ltr var(--duration-s) linear infinite;
+}
+.train--ltr .pass-text{
+  animation: textFade var(--duration-s) linear infinite;
+}
+
+/* Animación RTL (derecha → izquierda) */
+.train--rtl{
+  right:-160px; /* empieza fuera del recuadro */
+  animation: move-rtl var(--duration-s) linear infinite;
+}
+.train--rtl .pass-text{
+  animation: textFade var(--duration-s) linear infinite;
+}
+
+@keyframes move-ltr{
+  0% { left:-160px; }
+  50% { left:calc(50% - 80px); } /* cruza en el centro */
+  100% { left:100%; }
+}
+@keyframes move-rtl{
+  0% { right:-160px; }
+  50% { right:calc(50% - 80px); }
+  100% { right:100%; }
+}
+
+@keyframes textFade{
+  0%, 20% { opacity:0; }
+  25%, 75% { opacity:1; }
+  80%, 100% { opacity:0; }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .train{ animation:none !important; left:50% !important; transform:translateX(-50%) !important;}
+  .pass-text{ animation:none !important; opacity:1; }
+}
+</style>
+
+<div id="encuesta-malestar" class: seccion></div>
+
+<section id="encuesta-malestar">
+  <h2>Tipo de malestar durante un viaje en metro</h2>
+
+  <!-- Contenedor de círculos -->
+  <div class="circulos">
+    <div class="circulo" data-info="Irritación: 51%" style="--valor:51; --color:#2E86AB;"></div>
+    <div class="circulo" data-info="Estrés: 50%" style="--valor:50; --color:#2FA06E;"></div>
+    <div class="circulo" data-info="Cansancio: 29%" style="--valor:29; --color:#B657BD;"></div>
+    <div class="circulo" data-info="Molestia: 55%" style="--valor:55; --color:#E05A47;"></div>
+    <div class="circulo" data-info="Oídos tapados: 37%" style="--valor:37; --color:#F0A202;"></div>
+    <div class="circulo" data-info="Dolor de cabeza: 42%" style="--valor:42; --color:#1E88E5;"></div>
+    <div class="circulo" data-info="Ansiedad: 35%" style="--valor:35; --color:#43A047;"></div>
+    <div class="circulo" data-info="Incomodidad: 58%" style="--valor:58; --color:#8E24AA;"></div>
+    <div class="circulo" data-info="Indiferencia: 3%" style="--valor:10; --color:#FB8C00;"></div>
+  </div>
+
+  <!-- Leyenda organizada en 3 bloques -->
+  <div class="leyenda">
+    <div class="bloque">
+      <div><span style="background:#2E86AB"></span> Irritación</div>
+      <div><span style="background:#2FA06E"></span> Estrés</div>
+      <div><span style="background:#B657BD"></span> Cansancio</div>
+    </div>
+    <div class="bloque">
+      <div><span style="background:#E05A47"></span> Molestia</div>
+      <div><span style="background:#F0A202"></span> Oídos tapados</div>
+      <div><span style="background:#1E88E5"></span> Dolor de cabeza</div>
+    </div>
+    <div class="bloque">
+      <div><span style="background:#43A047"></span> Ansiedad</div>
+      <div><span style="background:#8E24AA"></span> Incomodidad</div>
+      <div><span style="background:#FB8C00"></span> Indiferencia</div>
+    </div>
+  </div>
+  <p>¿Crees que existen más malestares? Puedes compartilos con nosotros en <a href="https://:wwww.instagram.com/estacionruido_cl/" target="_blank">@estacionruido_cl</a></p>
+</section>
+
+
+<!-- Tooltip flotante -->
+<div id="tooltip"></div>
+
+<style>
+#encuesta-malestar {
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 15px;
+}
+
+.circulos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px 70px;
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+.circulo {
+  width: calc(var(--valor) * 2px);
+  height: calc(var(--valor) * 2px);
+  border-radius: 50%;
+  background: var(--color);
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+}
+.circulo:hover {
+  transform: scale(1.1);
+}
+
+.leyenda {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* columnas adaptables */
+  gap: 12px 40px;   /* espacio filas x columnas */
+  margin: 30px auto 0 auto;
+  font-size: 0.8rem;  /* un poco más legible */
+  max-width: 900px;   /* evita que quede demasiado ancha */
+}
+
+.leyenda div {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 🔑 separa siempre cuadrado y texto */
+}
+
+.leyenda span {
+  width: 14px;   /* cuadrado un poco más visible */
+  height: 14px;
+  margin-right: 5px;
+  border-radius: 2px;  /* esquinas suaves */
+  flex-shrink: 0;      /* mantiene tamaño del cuadrado */
+}
+
+
+
+/* Tooltip */
+#tooltip {
+  position: absolute;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+/* Animación de flotación */
+@keyframes flotar {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(2px, -3px) scale(1.02); }
+  50%  { transform: translate(-2px, 2px) scale(0.98); }
+  75%  { transform: translate(1px, -1px) scale(1.01); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.circulo {
+  width: calc(var(--valor) * 2px);
+  height: calc(var(--valor) * 2px);
+  border-radius: 50%;
+  background: var(--color);
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+
+  /* Animación sutil */
+  animation: flotar 4s ease-in-out infinite;
+}
+
+/* Para que el hover siga funcionando */
+.circulo:hover {
+  transform: scale(1.1);
+  animation-play-state: paused; /* pausa la animación mientras se hace hover */
+}
+
+</style>
+
+<script>
+const tooltip = document.getElementById('tooltip');
+
+document.querySelectorAll("#encuesta-malestar .circulo").forEach(c => {
+  c.addEventListener("click", (e) => {
+    tooltip.textContent = c.dataset.info;
+    const rect = c.getBoundingClientRect();
+    tooltip.style.top = rect.top - 30 + window.scrollY + 'px';
+    tooltip.style.left = rect.left + rect.width/2 - tooltip.offsetWidth/2 + window.scrollX + 'px';
+    tooltip.style.opacity = 1;
+
+    // Ocultar tooltip después de 5 segundos
+    setTimeout(() => {
+      tooltip.style.opacity = 0;
+    }, 2000);
+  });
+});
+</script>
+
+
+<!-- CSS -->
+<style>
+.carita {
+  cursor: pointer;
+  position: relative;
+  
+}
+
+.carita:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* Tooltip */
+.carita::after {
+  content: attr(data-info);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 4px 8px; /* menos padding */
+  border-radius: 6px;
+  font-size: 14px;  /* tamaño de texto más pequeño */
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+
+.carita.active::after {
+  opacity: 1;
+}
+</style>
+
+<!-- JavaScript -->
+<script>
+const caritas = document.querySelectorAll('.carita');
+
+caritas.forEach(carita => {
+  carita.addEventListener('click', () => {
+    // Si ya está activo, lo desactiva
+    if (carita.classList.contains('active')) {
+      carita.classList.remove('active');
+    } else {
+      // Quitar tooltip de otras caritas
+      caritas.forEach(c => c.classList.remove('active'));
+      // Mostrar tooltip de la carita clickeada
+      carita.classList.add('active');
+    }
+  });
+});
+
+</script>
+
+<style>
+.encuesta-container {
+    margin: 2rem auto;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.encuesta-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.grafico img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin-left: 150px;
+}
+
+.leyenda {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: left;
+    max-width: 350px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.cuadro {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 3px;
+}
+
+/* Colores iguales a tu gráfico */
+.femenino-18-29 { background-color: #007990; } 
+.femenino-30-45 { background-color: #007990; } 
+.femenino-46-65 { background-color: #007990; } 
+.masculino-18-29 { background-color: #f63f3a; } 
+.masculino-30-45 { background-color: #f63f3a; } 
+.no-binarie-18-29 { background-color: #ffa42e; } 
+</style>
+  </section>
+  
+<!-- Sección Mi experiencia -->
+<section id="experiencia" class="seccion">
+  <h2>Mi experiencia</h2>
+  <p>Cada viaje en metro está lleno de emociones: algunos buscan refugio con audífonos, otros muestran incomodidad… Esta imagen reúne las experiencias que compartimos día a día.</p>
+  <img src="gráficos/experiencia.png" 
+     alt="Persona viajando en el metro" 
+     class="experiencia-img">
+
+<style>
+  .experiencia-img {
+    max-width: 1000px;
+    width: 100%;
+    border-radius: 10px;
+    margin: 20px auto;
+    margin-bottom: 35px;
+    display: block;
+
+    /* Sombras suaves */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+    /* Transiciones suaves */
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+  }
+
+  /* Efecto hover */
+  .experiencia-img:hover {
+    transform: scale(1.03) rotate(-1deg);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+  }
+
+  /* Animación sutil de respiración */
+  @keyframes pulse {
+    0% { transform: scale(1);}
+    50% { transform: scale(1.01);}
+    100% { transform: scale(1);}
+  }
+
+  .experiencia-img {
+    animation: pulse 5s infinite;
+  }
+</style>
+  
+  <div>
+  <h3>¿Cómo es tu experiencia? ¿Cómo suena tu viaje?</h3>
+  <form id="experienciaForm">
+    <input type="text" id="nombreUsuario" placeholder="Tu nombre (opcional)">
+    <label>
+      <input type="checkbox" id="anonimo"> Publicar como anónimo
+    </label><br><br>
+
+    <textarea id="experienciaText" rows="4" cols="50" placeholder="Escribe tu experiencia aquí..."></textarea><br>
+    <button type="button" onclick="guardarExperiencia()">Guardar Experiencia</button>
+  </form>
+
+  <div id="experienciasGuardadas">
+    <h4>Experiencias guardadas:</h4>
+    <div id="gridExperiencias" class="grid-experiencias"></div>
+  </div>
+</div>
+</section>
+
+<style>
+  /* Grilla de experiencias */
+  .grid-experiencias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  /* Recuadro de cada experiencia */
+  .card-experiencia {
+    background: #ffffff; /* blanco */
+    color: #1D3557;      /* azul oscuro */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    word-wrap: break-word;
+    text-align: left;
+    position: relative;
+  }
+
+  .card-experiencia strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #222e50;
+  }
+
+  /* Botón eliminar */
+  .card-experiencia button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #E63946; /* rojo */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
+  .card-experiencia button:hover {
+    background: #b82d37;
+  }
+
+  /* Input para el nombre de usuario */
+#nombreUsuario {
+  width: 100%;
+  max-width: 280px;    /* más pequeño que el textarea */
+  margin-bottom: 10px;
+  padding: 6px;        /* opcional, más compacto */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Textarea de experiencia */
+#experienciaText {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+}
+
+  button.guardar {
+    background: #1D3557;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  button.guardar:hover {
+    background: #16324a;
+  }
+</style>
+
+<script>
+  // Recuperar experiencias si existen
+  let experiencias = JSON.parse(localStorage.getItem('experiencias')) || [];
+
+  function guardarExperiencia() {
+    const textarea = document.getElementById('experienciaText');
+    const nombreInput = document.getElementById('nombreUsuario');
+    const anonimoCheck = document.getElementById('anonimo');
+
+    const texto = textarea.value.trim();
+    let nombre = nombreInput.value.trim();
+
+    if (texto === ""){
+      alert("Por favor, escribe una experiencia antes de guardar.");
+      return;
+    }
+
+    if (anonimoCheck.checked || nombre === "") {
+      nombre = "Anónimo";
+    }
+
+    experiencias.push({ nombre: nombre, texto: texto });
+    localStorage.setItem('experiencias', JSON.stringify(experiencias));
+
+    textarea.value = '';
+    nombreInput.value = '';
+    anonimoCheck.checked = false;
+
+    mostrarExperiencias();
+  }
+
+  function mostrarExperiencias() {
+    const grid = document.getElementById('gridExperiencias');
+    grid.innerHTML = '';
+
+    experiencias.forEach((exp, index) => {
+      const card = document.createElement('div');
+      card.className = 'card-experiencia';
+      card.innerHTML = `
+        <strong>${exp.nombre}</strong>
+        <p>${exp.texto}</p>
+      `;
+
+      // Botón para borrar individual
+      const btnEliminar = document.createElement('button');
+      btnEliminar.textContent = "X";
+      btnEliminar.onclick = function() {
+        borrarExperiencia(index);
+      };
+
+      card.appendChild(btnEliminar);
+      grid.appendChild(card);
+    });
+  }
+
+  function borrarExperiencia(index) {
+    experiencias.splice(index, 1);
+    localStorage.setItem('experiencias', JSON.stringify(experiencias));
+    mostrarExperiencias();
+  }
+
+  window.onload = mostrarExperiencias;
+</script>
+
+
+<!-- Sección Quiénes somos -->
+<section id="quienes" class="seccion">
+  <h2>Quiénes somos</h2>
+  <img src="gráficos/quienes somos.png" alt="presentación del equipo" class="quienes-img" width="100%" height="100%" max-width="1000px">
+  <p>Somos un equipo de diseño e investigación comprometido con visibilizar cómo el ruido del metro de Santiago impacta en la vida de las personas. Nuestro proyecto nace desde la curiosidad y la experiencia cotidiana de viajar en la ciudad, donde el sonido se vuelve un acompañante constante, pero también un factor que influye en nuestro bienestar físico y emocional.</p>
+  
+  <p>A través del diseño visual, la exploración sonora y la recopilación de experiencias reales, buscamos abrir un espacio de reflexión: ¿cómo suena tu viaje? Queremos que esta plataforma sea un lugar donde la comunidad pueda reconocer los efectos del ruido, compartir vivencias y repensar la forma en que habitamos el transporte público.</p>
+  
+  <p>Creemos que hacer visible lo invisible —el ruido— es el primer paso para generar conciencia y, a futuro, inspirar cambios hacia una ciudad más amable y saludable.</p>
+  
+  <p>Puedes encontrarnos en <strong>X</strong> como <a href="https://x.com/EstacionRuido" target="_blank">@EstacionRuido</a>.</p>
+  <p>También pueden encontrarnos en <strong> instagram</strong> como <a href="https://www.instagram.com/estacionruido_cl/" target="_blank">@estacionruido_cl</a></p>
+</section>
+
+
+  <!-- Sección Recomendaciones -->
+  <section id="recomendaciones" class="seccion">
+    <h2>Recomendaciones</h2>
+    <p> El metro puede ser un lugar caótico y ruidoso, pero hay pequeños trucos para hacerlo más llevadero.</p>
+     
+    <div class="recomendaciones-grid">
+    <div class="recomendacion">
+      <img src="gráficos/post 1.png" alt="Recomendación 1">
+      <p>El ruido no tiene que arruinar tu viaje: unos audífonos y tu playlist favorita pueden hacer la diferencia.</p>
+    </div>
+    <div class="recomendacion">
+      <img src="gráficos/post 2.png" alt="Recomendación 2">
+      <p>Puede parecer inofensivo pero no pensamos en lo que el ruido puede hacer a nuestra salud</p>
+    </div>
+    <div class="recomendacion">
+      <img src="gráficos/post 5.png" alt="Recomendación 3">
+      <p>Escuchar esto todos los días puede afectar tu salud auditiva</p>
+    </div>
+    <div class="recomendacion">
+      <img src="gráficos/post 4.png" alt="Recomendación 3">
+      <p>Con solo elegir el llugar correcto, puedes reducir la exposición al ruido y hacer tu viaje mucho más cómodo</p>
+    </div>
+    <div class="recomendacion">
+      <img src="gráficos/post 3.png" alt="Recomendación 3">
+      <p>Cada viaje que hacemos está lleno de sonidos que no siempre notamos, pero afectan nuestro bienestar</p>
+    </div>
+    <div class="recomendacion">
+      <img src="gráficos/post 6.png" alt="Recomendación 3">
+      <p>El ruido siempre está, así que convierte tu viaje en un moemtno para disfrutar</p>
+    </div>
+    </div>
+    <div class="recomendaciones-extra">
+      <p><strong>¿Tienes más recomendaciones?</strong><p>  
+      </p> ¡Compártelas con nosotros en <a href="https://www.instagram.com/estacionruido_cl/" target="_blank">instagram</a>!</p>
+      <style>
+        .recomendaciones-extra {
+          margin-top: 10px;
+          font-size: 1rem;
+          color: #555;
+        }
+        .recomendaciones-extra a {
+          color: #1D3557;
+          text-decoration: none;
+        }
+        .recomendaciones-extra a:hover {
+          text-decoration: underline;
+        }
+      </style>
+
+  </div>
+  
+</section>
+
+
+<!-- CSS para el grid -->
+<style>
+  #recomendaciones {
+    padding: 2rem;
+    text-align: center;
+    background-color: #f5f5f5;
+  }
+
+  .recomendaciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .recomendacion {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+
+  .recomendacion:hover {
+    transform: translateY(-5px);
+  }
+
+  .recomendacion img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .recomendacion p {
+    padding: 0.5rem 1rem 1rem;
+    font-size: 0.9rem;
+    color: #333;
+  }
+</style>
+  </section>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    // Función para mostrar/ocultar secciones
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.seccion').forEach(sec => {
+        sec.classList.remove('activa');
+      });
+      document.getElementById(id).classList.add('activa');
+    }
+  </script>
+
+  <script>
+function mostrarSeccion(id, addHistory = true) {
+  // Oculta todas las secciones
+  document.querySelectorAll('.seccion').forEach(sec => {
+    sec.classList.remove('activa');
+  });
+
+  // Muestra la sección actual
+  const seccion = document.getElementById(id);
+  if (seccion) {
+    seccion.classList.add('activa');
+
+    // Actualiza la URL y el historial (si no fue un popstate)
+    if (addHistory) {
+      history.pushState({ seccion: id }, '', `#${id}`);
+    }
+  }
+}
+
+// Manejar retroceso/avance del navegador
+window.addEventListener('popstate', (event) => {
+  if (event.state && event.state.seccion) {
+    mostrarSeccion(event.state.seccion, false);
+  } else {
+    mostrarSeccion('mapa', false); // sección por defecto
+  }
+});
+
+// Mostrar la sección correcta al cargar la página
+window.addEventListener('load', () => {
+  const seccion = window.location.hash.replace('#', '');
+  if (seccion) {
+    mostrarSeccion(seccion, false);
+  } else {
+    mostrarSeccion('mapa', false); // sección por defecto
+  }
+});
+
+</script>
+
+</body>
+</html>
