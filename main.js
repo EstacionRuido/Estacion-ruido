@@ -143,5 +143,30 @@ function mostrarSeccion(id) {
   document.getElementById(id).classList.add('activa'); // muestra la sección que corresponde
 }
 
+// Seleccionamos elementos
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.querySelector('.lightbox-img');
+const cerrar = document.querySelector('.cerrar');
+
+// Abrir lightbox al hacer clic en la imagen
+document.querySelectorAll('.clickeable').forEach(img => {
+  img.addEventListener('click', () => {
+    lightbox.style.display = 'flex';
+    lightboxImg.src = img.src;
+  });
+});
+
+// Cerrar lightbox al hacer clic en la X
+cerrar.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+});
+
+// Cerrar lightbox al hacer clic fuera de la imagen
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox) lightbox.style.display = 'none';
+});
+
+
+
 
 
