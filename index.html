@@ -566,7 +566,7 @@
       <div><span style="background:#FB8C00"></span> Indiferencia</div>
     </div>
   </div>
-  <p>¿Crees que existen más malestares? Puedes compartilos con nosotros en <a href="https://www.instagram.com/estacionruido_cl/" target="_blank">@estacionruido_cl</a></p>
+  <p>¿Crees que existen más malestares? Puedes compartilos con nosotros en <a href="https://:wwww.instagram.com/estacionruido_cl/" target="_blank">@estacionruido_cl</a></p>
 </section>
 
 
@@ -1033,34 +1033,40 @@ caritas.forEach(carita => {
      
     <div class="recomendaciones-grid">
     <div class="recomendacion">
-      <img src="gráficos/post 1.png" alt="Recomendación 1">
+      <img src="gráficos/post 1.png" alt="Recomendación 1" class="clickeable">
       <p>El ruido no tiene que arruinar tu viaje: unos audífonos y tu playlist favorita pueden hacer la diferencia.</p>
     </div>
     <div class="recomendacion">
-      <img src="gráficos/post 2.png" alt="Recomendación 2">
+      <img src="gráficos/post 2.png" alt="Recomendación 2" class="clickeable">
       <p>Puede parecer inofensivo pero no pensamos en lo que el ruido puede hacer a nuestra salud</p>
     </div>
     <div class="recomendacion">
-      <img src="gráficos/post 5.png" alt="Recomendación 3">
+      <img src="gráficos/post 5.png" alt="Recomendación 3" class="clickeable">
       <p>Escuchar esto todos los días puede afectar tu salud auditiva</p>
     </div>
     <div class="recomendacion">
-      <img src="gráficos/post 4.png" alt="Recomendación 3">
+      <img src="gráficos/post 4.png" alt="Recomendación 3" class="clickeable">
       <p>Con solo elegir el llugar correcto, puedes reducir la exposición al ruido y hacer tu viaje mucho más cómodo</p>
     </div>
     <div class="recomendacion">
-      <img src="gráficos/post 3.png" alt="Recomendación 3">
+      <img src="gráficos/post 3.png" alt="Recomendación 3" class="clickeable">
       <p>Cada viaje que hacemos está lleno de sonidos que no siempre notamos, pero afectan nuestro bienestar</p>
     </div>
     <div class="recomendacion">
-      <img src="gráficos/post 6.png" alt="Recomendación 3">
+      <img src="gráficos/post 6.png" alt="Recomendación 3" class="clickeable">
       <p>El ruido siempre está, así que convierte tu viaje en un moemtno para disfrutar</p>
     </div>
     </div>
     <div class="recomendaciones-extra">
       <p><strong>¿Tienes más recomendaciones?</strong><p>  
       </p> ¡Compártelas con nosotros en <a href="https://www.instagram.com/estacionruido_cl/" target="_blank">instagram</a>!</p>
+      <!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+  <span class="cerrar">&times;</span>
+  <img class="lightbox-img" src="">
+</div>
       <style>
+        
         .recomendaciones-extra {
           margin-top: 10px;
           font-size: 1rem;
@@ -1073,6 +1079,8 @@ caritas.forEach(carita => {
         .recomendaciones-extra a:hover {
           text-decoration: underline;
         }
+
+        
       </style>
 
   </div>
@@ -1118,6 +1126,33 @@ caritas.forEach(carita => {
     font-size: 0.9rem;
     color: #333;
   }
+  .lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.cerrar {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
 </style>
   </section>
 
@@ -1177,4 +1212,4 @@ window.addEventListener('load', () => {
 
 </body>
 </html>
-
+    
